@@ -1,6 +1,12 @@
 #include "8bit_reg.h"
 #include <stdio.h>
 
+#define FIFO_BLOCK_BIT (DATA0->CTRL >> 7)
+#define FIFO_FULL_BIT  (DATA0->STATUS >> 7)
+
+#define LIFO_BLOCK_BIT (DATA0->CTRL >> 6)
+#define LIFO_FULL_BIT  (DATA0->STATUS >> 6)
+
 DataRegisters mock_data0; 
 DataRegisters *DATA0 = &mock_data0;
 
@@ -29,21 +35,35 @@ void _LIFO_BLOCK_DATAFLOW(void)
     DATA0->CTRL |= CTRL_LIFO_DFB_MASK;
 }
 
-void _FIFO_UNLOCK_DATAFLOW(void)
+uint8_t _FIFO_UNLOCK_DATAFLOW(void)
 {
+    if((FIFO_FULL_BIT == 1))
+    {
+        return 1;
+    }
+
     // Cleaning and setting FIFO bit
     DATA0->CTRL &= ~(CTRL_FIFO_DFB_MASK);
     DATA0->CTRL |= CTRL_FIFO_DFNB_MASK;
+
+    return 0;
 }
 
-void _LIFO_UNLOCK_DATAFLOW(void)
+uint8_t _LIFO_UNLOCK_DATAFLOW(void)
 {
+    if(((DATA0->STATUS >> 6) == 1))
+    {
+        return 1;
+    }
+
     // Cleaning and setting LIFO bit
     DATA0->CTRL &= ~(CTRL_LIFO_DFB_MASK);
     DATA0->CTRL |= CTRL_LIFO_DFNB_MASK;
+
+    return 0;
 }
 
-// INTERNAL status register
+// == INTERNAL status register functions ==
 
 void _INTERNAL_SETSTATUS_FIFO_FULL(void)
 {
@@ -65,14 +85,22 @@ void _INTERNAL_SETSTATUS_LIFO_NFULL(void)
     DATA0->STATUS &= ~(STATUS_LIFO_ISF_MASK);
 }
 
-int main()
+uint8_t _CHECK_FIFO_DATAFLOW(void)
 {
-    printf("Valor de DATA0->STATUS: %d\n\n", DATA0->STATUS);
+    if((FIFO_BLOCK_BIT == 1) || (FIFO_FULL_BIT == 1))
+    {
+        return 1;
+    }
 
-    _INTERNAL_SETSTATUS_FIFO_FULL();
-    _INTERNAL_SETSTATUS_LIFO_FULL();
+    return 0;
+}
 
-    printf("Valor de DATA0->STATUS: %d\n\n", DATA0->STATUS);
+uint8_t _CHECK_LIFO_DATAFLOW(void)
+{
+    if((LIFO_BLOCK_BIT == 1) || (LIFO_FULL_BIT == 1))
+    {
+        return 1;
+    }
 
     return 0;
 }
