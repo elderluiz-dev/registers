@@ -9,41 +9,47 @@ typedef struct {
 
 extern DataRegisters *DATA0;
 
-#define MASK_ALL (0xFF << 0)
+#define MASK_ALL (0xFFU << 0)
 
 // == CTRL Register masks ==
-// LIFO Data Flow Not Blocked
-// 0b01100000U
-#define CTRL_LIFO_DFNB_MASK (0b11 << 5);
-
-// LIFO Data Flow Blocked
-// 0b00001000U
-#define CTRL_LIFO_DFB_MASK (0b01 << 3);
-
 // FIFO Data Flow Not Blocked
-// 0b10010000U
-#define CTRL_FIFO_DFNB_MASK (0b1001 << 4);
+// 0b00000010U
+#define CTRL_FIFO_DFNB_MASK (uint8_t)(0b1 << 1)
 
 // FIFO Data Flow Blocked
 // 0b10000000U
-#define CTRL_FIFO_DFB_MASK (0b01 << 7);
+#define CTRL_FIFO_DFB_MASK  (uint8_t)(0b1 << 7)
+
+// LIFO Data Flow Not Blocked
+// 0b00000001U
+#define CTRL_LIFO_DFNB_MASK (uint8_t)(0b1 << 0)
+
+// LIFO Data Flow Blocked
+// 0b01000000U
+#define CTRL_LIFO_DFB_MASK  (uint8_t)(0b1 << 6)
 
 
 // == STATUS Register masks ==
 // Data FIFO is Full
-// 0b11000000U
-#define STATUS_FIFO_ISF_MASK (0b11 << 6)
+// 0b10000000U
+#define STATUS_FIFO_ISF_MASK (uint8_t)(0b1 << 7)
 
 // Data FIFO is Not Full
-// 0b10000000U
-#define STATUS_FIFO_NF_MASK (0b01 << 7)
+// 0b00000010U
+#define STATUS_FIFO_NF_MASK (uint8_t)(0b1 << 1)
 
 // Data LIFO is Full
-// 0b00110000U
-#define STATUS_LIFO_ISF_MASK (0b11 << 4)
+// 0b01000000U
+#define STATUS_LIFO_ISF_MASK (uint8_t)(0b1 << 6)
 
 // Data LIFO is Not Full
-// 0b00100000U
-#define STATUS_LIFO_NF_MASK (0b01 << 5)
+// 0b00000001U
+#define STATUS_LIFO_NF_MASK (uint8_t)(0b1 << 0)
 
 void _INIT_REGISTERS(void);
+
+void _FIFO_BLOCK_DATAFLOW(void);
+void _LIFO_BLOCK_DATAFLOW(void);
+
+void _FIFO_UNLOCK_DATAFLOW(void);
+void _LIFO_UNLOCK_DATAFLOW(void);
