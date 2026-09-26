@@ -7,12 +7,8 @@ DataRegisters *DATA0 = &mock_data0;
 void _INIT_REGISTERS(void)
 {
     // Cleaning registers
-    DATA0->CTRL &= ~(MASK_ALL);
-    DATA0->STATUS &= ~(MASK_ALL);
-
-    // Setting initial status of FIFO and LIFO in STATUS register
-    DATA0->STATUS |= STATUS_FIFO_NF_MASK;
-    DATA0->STATUS |= STATUS_LIFO_NF_MASK;
+    DATA0->CTRL &= ~(CLEAR_MASK_ALL);
+    DATA0->STATUS &= ~(CLEAR_MASK_ALL);
 
     // Setting initial status of FIFO and LIFO in CTRL register
     DATA0->CTRL |= CTRL_FIFO_DFNB_MASK;
@@ -47,26 +43,36 @@ void _LIFO_UNLOCK_DATAFLOW(void)
     DATA0->CTRL |= CTRL_LIFO_DFNB_MASK;
 }
 
-void INTERNAL_SETSTATUS_FIFO_FULL(void)
+// INTERNAL status register
+
+void _INTERNAL_SETSTATUS_FIFO_FULL(void)
 {
-    DATA0->STATUS &= ~(STATUS_FIFO_NF_MASK);
     DATA0->STATUS |= STATUS_FIFO_ISF_MASK;
 }
 
-void INTERNAL_SETSTATUS_FIFO_NFULL(void)
+void _INTERNAL_SETSTATUS_FIFO_NFULL(void)
 {
     DATA0->STATUS &= ~(STATUS_FIFO_ISF_MASK);
-    DATA0->STATUS |= STATUS_FIFO_NF_MASK;
 }
 
-void INTERNAL_SETSTATUS_LIFO_FULL(void)
+void _INTERNAL_SETSTATUS_LIFO_FULL(void)
 {
-    DATA0->STATUS &= ~(STATUS_LIFO_NF_MASK);
     DATA0->STATUS |= STATUS_LIFO_ISF_MASK;
 }
 
-void INTERNAL_SETSTATUS_LIFO_NFULL(void)
+void _INTERNAL_SETSTATUS_LIFO_NFULL(void)
 {
     DATA0->STATUS &= ~(STATUS_LIFO_ISF_MASK);
-    DATA0->STATUS |= STATUS_LIFO_NF_MASK;
+}
+
+int main()
+{
+    printf("Valor de DATA0->STATUS: %d\n\n", DATA0->STATUS);
+
+    _INTERNAL_SETSTATUS_FIFO_FULL();
+    _INTERNAL_SETSTATUS_LIFO_FULL();
+
+    printf("Valor de DATA0->STATUS: %d\n\n", DATA0->STATUS);
+
+    return 0;
 }
