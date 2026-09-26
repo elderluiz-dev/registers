@@ -1,4 +1,8 @@
 #include "8bit_reg.h"
+#include <stdio.h>
+
+DataRegisters mock_data0; 
+DataRegisters *DATA0 = &mock_data0;
 
 void _INIT_REGISTERS(void)
 {
@@ -12,5 +16,29 @@ void _INIT_REGISTERS(void)
 
     // Setting initial status of FIFO and LIFO in CTRL register
     DATA0->CTRL |= CTRL_FIFO_DFNB_MASK;
+    DATA0->CTRL |= CTRL_LIFO_DFNB_MASK;
+}
+
+void _FIFO_BLOCK_DATAFLOW(void)
+{
+    DATA0->CTRL &= ~(CTRL_FIFO_DFNB_MASK);
+    DATA0->CTRL |= CTRL_FIFO_DFB_MASK;
+}
+
+void _LIFO_BLOCK_DATAFLOW(void)
+{
+    DATA0->CTRL &= ~(CTRL_LIFO_DFNB_MASK);
+    DATA0->CTRL |= CTRL_LIFO_DFB_MASK;
+}
+
+void _FIFO_UNLOCK_DATAFLOW(void)
+{
+    DATA0->CTRL &= ~(CTRL_FIFO_DFB_MASK);
+    DATA0->CTRL |= CTRL_FIFO_DFNB_MASK;
+}
+
+void _LIFO_UNLOCK_DATAFLOW(void)
+{
+    DATA0->CTRL &= ~(CTRL_LIFO_DFB_MASK);
     DATA0->CTRL |= CTRL_LIFO_DFNB_MASK;
 }
