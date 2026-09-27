@@ -14,5 +14,5 @@ typedef struct stack {
 void init_stack(stack **pilha);
 void add_stack_node(int data, stack **pilha);
 void remove_stack_node(stack **pilha);
-void stack_empty_verify(stack **pilha);
+void stack_empty_verify(stack *pilha);
 void clear_stack(stack **pilha);

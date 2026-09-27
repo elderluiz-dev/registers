@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
+#include "8bit_reg.h"
 
 void init_stack(stack **pilha){
     *pilha = malloc(sizeof(**pilha));
@@ -36,8 +37,8 @@ void remove_stack_node(stack **pilha){
     (*pilha)->tamanho--;
 }
 
-void stack_empty_verify(stack **pilha){
-    if((*pilha) == NULL || (*pilha)->topo == NULL){
+void stack_empty_verify(stack *pilha){
+    if(pilha == NULL || pilha->topo == NULL){
         printf("Lista vazia!\n");
     }else {
         printf("Lista não vazia!\n");
@@ -61,37 +62,70 @@ int main(){
     uint8_t data1 = 0x12U;
     uint8_t data2 = 0x1FU;
     uint8_t data3 = 0xF3U;
-        
+
+
+    // iniciando stack    
     printf("Iniciando stack...\n");
-    init_stack(&pilha);
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        init_stack(&pilha);    
+    }
     printf("Stack iniciada!\n");
 
+
+    // adicionando item na stack
     printf("Adicionando item na stack...\n");
-    add_stack_node(data1, &pilha);
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        add_stack_node(data1, &pilha);
+    }
     printf("Item adicionado!...\n");
     printf("Topo da pilha: 0x%x\n", pilha->topo->data);
 
     printf("Adicionando item na stack...\n");
-    add_stack_node(data2, &pilha);
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        add_stack_node(data2, &pilha);
+    }
     printf("Item adicionado!...\n");
     printf("Topo da pilha: 0x%x\n", pilha->topo->data);
 
     printf("Adicionando item na stack...\n");
-    add_stack_node(data3, &pilha);
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        add_stack_node(data3, &pilha);
+    }
     printf("Item adicionado!...\n");
     printf("Topo da pilha: 0x%x\n", pilha->topo->data);
 
+
+    // removendo topo da stack
     printf("Removendo topo da stack...\n");
-    remove_stack_node(&pilha);
+    
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        remove_stack_node(&pilha);
+    }
     printf("Item removido!\n");
     printf("Topo da pilha: 0x%x\n", pilha->topo->data);
 
-    printf("Prox elemento: 0x%x\n", pilha->topo->prox->data);
 
-    stack_empty_verify(&pilha);
+    // verificando se a stack está vazia
+    stack_empty_verify(pilha);
 
+
+    // esvaziando stack
     printf("Limpando stack...\n");
-    clear_stack(&pilha);
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Lista bloqueada\n");
+    }else{
+        clear_stack(&pilha);
+    }
     printf("Stack esvaziada!\n");
 
     return 0;
