@@ -95,14 +95,63 @@ void clear_queue(queue **fila)
         return;
     }
 
-    n_queue *node = (*fila)->inicio;
-    while(node != NULL)
+    while((*fila)->size != 0)
     {
-        (*fila)->inicio = node->prox;
-        free(node);
-        node = (*fila)->inicio;
+        remove_queue_node(*fila);
     }
 
     free(*fila);
     return;
 }
+/*
+int main(){
+    queue *fila;
+    uint8_t data1 = 0x12U;
+    uint8_t data2 = 0x1FU;
+    uint8_t data3 = 0xF3U;
+
+
+    // iniciando stack    
+    printf("Iniciando fila...\n");
+    init_queue(&fila);
+    printf("Fila iniciada!\n");
+
+
+    // adicionando item na stack
+    printf("Adicionando item na fila...\n");
+    add_queue_node(fila, data1);
+    printf("Item adicionado!...\n");
+    printf("Topo da fila: 0x%x\n", fila->inicio->data);
+
+    printf("Adicionando item na fila...\n");
+    add_queue_node(fila, data2);
+    printf("Item adicionado!...\n");
+    printf("Fim da fila: 0x%x\n", fila->fim->data);
+
+    printf("Adicionando item na fila...\n");
+    add_queue_node(fila, data3);
+    printf("Item adicionado!...\n");
+    printf("Fim da fila: 0x%x\n", fila->fim->data);
+
+
+    // removendo topo da stack
+    printf("Removendo topo da fila...\n");
+
+    remove_queue_node(fila);
+    printf("Item removido!\n");
+    printf("Fim da fila: 0x%x\n", fila->fim->data);
+
+
+    // verificando se a stack está vazia
+    check_queue(fila);
+    printf("\n");
+
+
+    // esvaziando stack
+    printf("Limpando fila...\n");
+    clear_queue(&fila);
+    printf("Fila esvaziada!\n");
+
+    return 0;
+}
+*/
