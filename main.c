@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "interface.h"
 #include "stack.h"
 
 int main()
