@@ -13,7 +13,7 @@ void init_stack(stack **pilha){
     (*pilha)->topo = NULL;
 }
 
-void add_stack_node(int data, stack **pilha){
+void add_stack_node(uint8_t data, stack **pilha){
     n_stack *node = malloc(sizeof(*node));
     if(node == NULL){
         return;
