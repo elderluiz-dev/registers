@@ -52,7 +52,7 @@ uint8_t _FIFO_UNLOCK_DATAFLOW(void)
 
 uint8_t _LIFO_UNLOCK_DATAFLOW(void)
 {
-    if(((DATA0->STATUS >> 6) == 1))
+    if((LIFO_FULL_BIT == 1))
     {
         return 1;
     }
