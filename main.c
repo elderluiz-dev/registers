@@ -13,8 +13,6 @@ int main()
         switch (opcao)
         {
         case 1:
-            
-
             break;
         case 2:
             /* code for removing element */
