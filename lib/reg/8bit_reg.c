@@ -1,5 +1,6 @@
-#include "8bit_reg.h"
 #include <stdio.h>
+
+#include "8bit_reg.h"
 
 #define FIFO_BLOCK_BIT (DATA0->CTRL >> 7)
 #define FIFO_FULL_BIT  (DATA0->STATUS >> 7)
@@ -63,7 +64,9 @@ uint8_t _LIFO_UNLOCK_DATAFLOW(void)
     return 0;
 }
 
-// == INTERNAL status register functions ==
+// === INTERNAL status register functions ===
+
+// == FIFO ==
 
 void _INTERNAL_SETSTATUS_FIFO_FULL(void)
 {
@@ -75,6 +78,8 @@ void _INTERNAL_SETSTATUS_FIFO_NFULL(void)
     DATA0->STATUS &= ~(STATUS_FIFO_ISF_MASK);
 }
 
+// == LIFO ==
+
 void _INTERNAL_SETSTATUS_LIFO_FULL(void)
 {
     DATA0->STATUS |= STATUS_LIFO_ISF_MASK;
@@ -85,9 +90,13 @@ void _INTERNAL_SETSTATUS_LIFO_NFULL(void)
     DATA0->STATUS &= ~(STATUS_LIFO_ISF_MASK);
 }
 
+// === Check Functions ===
+
+// == FIFO ==
+
 uint8_t _CHECK_FIFO_DATAFLOW(void)
 {
-    if((FIFO_BLOCK_BIT == 1) || (FIFO_FULL_BIT == 1))
+    if(FIFO_BLOCK_BIT == 1)
     {
         return 1;
     }
@@ -95,9 +104,11 @@ uint8_t _CHECK_FIFO_DATAFLOW(void)
     return 0;
 }
 
+// == LIFO ==
+
 uint8_t _CHECK_LIFO_DATAFLOW(void)
 {
-    if((LIFO_BLOCK_BIT == 1) || (LIFO_FULL_BIT == 1))
+    if(LIFO_BLOCK_BIT == 1)
     {
         return 1;
     }
