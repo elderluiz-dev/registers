@@ -4,6 +4,11 @@
 #include "8bit_reg.h"
 
 uint8_t init_stack(stack **pilha){
+    if(*pilha != NULL){
+        printf("Lista já iniciada\n");
+        return 1;
+    }
+    
     *pilha = malloc(sizeof(**pilha));
     if(*pilha == NULL){
         return 1;
@@ -16,6 +21,11 @@ uint8_t init_stack(stack **pilha){
 }
 
 uint8_t add_stack_node(int data, stack **pilha){
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Pilha bloqueada.\n");
+        return 1;
+    }
+    
     n_stack *node = malloc(sizeof(*node));
     if(node == NULL){
         return 1;
@@ -31,6 +41,11 @@ uint8_t add_stack_node(int data, stack **pilha){
 }
 
 uint8_t remove_stack_node(stack **pilha){
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Pilha bloqueada.\n");
+        return 1;
+    }
+    
     if(*pilha == NULL || (*pilha)->topo == NULL){
         return 1;
     }
@@ -60,6 +75,11 @@ uint8_t stack_empty_verify(stack *pilha){
 }
 
 uint8_t clear_stack(stack **pilha){
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("Pilha bloqueada.\n");
+        return 1;
+    }
+    
     while((*pilha)->tamanho != 0){
         remove_stack_node(pilha);
     }
@@ -79,6 +99,8 @@ uint8_t clear_stack(stack **pilha){
     return 0;
  }
 
+
+/*
 int main(){
     stack *pilha;
     uint8_t data1 = 0x12U;
@@ -157,3 +179,4 @@ int main(){
 
     return 0;
 }
+*/
