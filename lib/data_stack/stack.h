@@ -11,8 +11,12 @@ typedef struct stack {
     n_stack* topo;
 } stack;
 
-void init_stack(stack **pilha);
-void add_stack_node(int data, stack **pilha);
-void remove_stack_node(stack **pilha);
-void stack_empty_verify(stack *pilha);
-void clear_stack(stack **pilha);
+// must-have
+uint8_t init_stack(stack **pilha);
+uint8_t add_stack_node(int data, stack **pilha);
+uint8_t remove_stack_node(stack **pilha);
+uint8_t stack_empty_verify(stack *pilha);
+uint8_t clear_stack(stack **pilha);
+
+// extra
+uint8_t check_full(stack *pilha);
