@@ -10,17 +10,51 @@ int main(){
 
     while(1)
     {
+        limpa_terminal();
         int x = menu_principal();
         switch(x)
         {
         case 1:
 
+            limpa_terminal();
+            stack *pilha;
+            init_stack(&pilha);
             opt = 1;
             while(opt == 1)
             {
                 int a = menu_stack();
                 switch(a)
                 {
+                case 1:
+                    uint8_t byte;
+                    unsigned int temp;
+                    printf("Byte a ser adicionado: \n");
+                    scanf("%u", &temp);
+                    byte = (uint8_t)temp;
+
+                    limpa_terminal();
+                    add_stack_node(byte, &pilha);
+                    break;
+
+                case 2:
+                    limpa_terminal();
+                    remove_stack_node(&pilha);
+                    break;
+
+                case 3:
+                    limpa_terminal();
+                    if(stack_empty_verify(pilha) == 1){
+                        break;
+                    }else{
+                        printf("Topo da pilha: 0x%x", pilha->topo->data);
+                    }
+                    break;
+
+                case 4:
+                    limpa_terminal();
+                    clear_stack(&pilha);
+                    break;
+
                 case 0:
                     opt = 0;
                     break;
