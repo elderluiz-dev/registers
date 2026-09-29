@@ -7,6 +7,7 @@
 
 int main(){
     int opt;
+    _INIT_REGISTERS();
 
     while(1)
     {
@@ -15,6 +16,12 @@ int main(){
         switch(x)
         {
         case 1:
+
+            if(_CHECK_LIFO_DATAFLOW() == 1){
+                printf("Pilha bloqueada! Desbloqueie em <REGISTRADORES>\n");
+                break;
+            }
+            
 
             limpa_terminal();
             stack *pilha;
@@ -68,6 +75,11 @@ int main(){
 
         case 2:
 
+            if(_CHECK_FIFO_DATAFLOW() == 1){
+                printf("Fila bloqueada! Desbloqueie em <REGISTRADORES>\n");
+                break;
+            }
+
             opt = 1;
             while(opt == 1)
             {
@@ -90,9 +102,32 @@ int main(){
             opt = 1;
             while(opt == 1)
             {
+                
+                printf("REGISTRADOR: %u\n", DATA0->CTRL);
+                printf("FIFO: %u | LIFO: %u\n", _CHECK_FIFO_DATAFLOW(), _CHECK_LIFO_DATAFLOW());
+
                 int a = menu_reg();
                 switch(a)
                 {
+
+                case 1:
+                    if(_CHECK_FIFO_DATAFLOW() == 1){
+                        _FIFO_UNLOCK_DATAFLOW();    
+                    }else{
+                        _FIFO_BLOCK_DATAFLOW();
+                    }
+
+                    break;
+
+                case 2:
+                    if(_CHECK_LIFO_DATAFLOW() == 1){
+                        _LIFO_UNLOCK_DATAFLOW();    
+                    }else{
+                        _LIFO_BLOCK_DATAFLOW();
+                    }
+
+                    break;
+
                 case 0:
                     opt = 0;
                     break;

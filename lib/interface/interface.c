@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "interface.h"
+#include "8bit_reg.h"
 
 int menu_principal(){
     int x;
@@ -56,8 +57,17 @@ int menu_reg(){
     int x;
 
     printf("\n===== REGISTRADORES =====\n");
-    printf("1. Bloquear fila\n");
-    printf("2. Bloquear pilha\n");
+    if(_CHECK_FIFO_DATAFLOW() == 1){
+        printf("1. Desbloquear fila\n");    
+    }else{
+        printf("1. Bloquear fila\n");
+    }
+    
+    if(_CHECK_LIFO_DATAFLOW() == 1){
+        printf("2. Desbloquear pilha\n");    
+    }else{
+        printf("2. Bloquear pilha\n");
+    }
     printf("0. Voltar\n");
     printf("> ");
     
