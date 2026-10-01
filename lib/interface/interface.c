@@ -15,8 +15,7 @@ int menu_principal(){
 
     scanf("%d%*c", &x);
 
-    return x;
-    
+    return x;    
 }
 
 int menu_stack(){
@@ -33,7 +32,6 @@ int menu_stack(){
     scanf("%d%*c", &x);
 
     return x;
-
 }
 
 int menu_queue(){
@@ -50,31 +48,36 @@ int menu_queue(){
     scanf("%d%*c", &x);
 
     return x;
-
 }
 
 int menu_reg(){
     int x;
 
     printf("\n===== REGISTRADORES =====\n");
-    if(_CHECK_FIFO_DATAFLOW() == 1){
+    if(_CHECK_FIFO_DATAFLOW() == 1)
+    {
         printf("1. Desbloquear fila\n");    
-    }else{
+    }
+    else
+    {
         printf("1. Bloquear fila\n");
     }
     
-    if(_CHECK_LIFO_DATAFLOW() == 1){
+    if(_CHECK_LIFO_DATAFLOW() == 1)
+    {
         printf("2. Desbloquear pilha\n");    
-    }else{
+    }
+    else
+    {
         printf("2. Bloquear pilha\n");
     }
+    
     printf("0. Voltar\n");
     printf("> ");
     
     scanf("%d%*c", &x);
 
     return x;
-
 }
 
 void limpa_terminal(){

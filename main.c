@@ -21,7 +21,6 @@ int main(){
                 printf("Pilha bloqueada! Desbloqueie em <REGISTRADORES>\n");
                 break;
             }
-            
 
             limpa_terminal();
             stack *pilha;
@@ -65,7 +64,7 @@ int main(){
                 case 0:
                     opt = 0;
                     break;
-                
+
                 default:
                     printf("Opção inválida.\n");
                     break;
@@ -102,14 +101,12 @@ int main(){
             opt = 1;
             while(opt == 1)
             {
-                
                 printf("REGISTRADOR: %u\n", DATA0->CTRL);
                 printf("FIFO: %u | LIFO: %u\n", _CHECK_FIFO_DATAFLOW(), _CHECK_LIFO_DATAFLOW());
 
                 int a = menu_reg();
                 switch(a)
                 {
-
                 case 1:
                     if(_CHECK_FIFO_DATAFLOW() == 1){
                         _FIFO_UNLOCK_DATAFLOW();    
@@ -131,7 +128,7 @@ int main(){
                 case 0:
                     opt = 0;
                     break;
-                
+
                 default:
                     printf("Opção inválida.\n");
                     break;
@@ -142,13 +139,12 @@ int main(){
         case 0:
             printf("Programa encerrado pelo usuário\n");
             return 0;
-        
+
         default:
             printf("Opção inválida.\n");
             break;
         }
     }
-    
 
     return 0;
 }

@@ -16,6 +16,7 @@ uint8_t init_queue(queue **fila)
     (*fila)->size = 0;
     (*fila)->inicio = NULL;
     (*fila)->fim = NULL;
+
     return 0;
 }
 
@@ -26,6 +27,7 @@ uint8_t add_queue_node(queue *fila, uint8_t data)
         printf("A fila ainda não foi iniciada.");
         return 1;
     }
+ 
     if(_CHECK_FIFO_DATAFLOW() || check_full_queue(fila))
     {
         printf("Não pode ser adicionado!\n");
@@ -67,6 +69,7 @@ uint8_t remove_queue_node(queue *fila)
         printf("A fila esta vazia.");
         return 1;
     }
+ 
     if(_CHECK_FIFO_DATAFLOW())
     {
         printf("A fila está bloqueada!\n");
@@ -103,6 +106,7 @@ uint8_t check_queue(queue *fila)
         printf("A fila esta vazia.");
         return 1;
     }
+ 
     printf("A fila possui %d elementos", fila->size);
     
     return 0;
@@ -115,6 +119,7 @@ uint8_t clear_queue(queue **fila)
         printf("A fila ainda não foi iniciada.");
         return 1;
     }
+ 
     if(_CHECK_FIFO_DATAFLOW())
     {
         printf("A fila está bloqueada!\n");
