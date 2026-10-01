@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "queue.h"
-#include "../reg/8bit_reg.h"
+#include "8bit_reg.h"
 
 uint8_t init_queue(queue **fila)
 {

@@ -221,7 +221,7 @@ void init_program()
 
         case 0:
             printf("Programa encerrado pelo usuário\n");
-            return 0;
+            return;
 
         default:
             printf("Opção inválida.\n");
