@@ -9,9 +9,9 @@
 int main_menu(){
     int x;
 
-    printf("\n===== SIMULADOR DE REGISTRADOR =====\n");
-    printf("1. Gerenciar fila (FIFO)\n");
-    printf("2. Gerenciar pilha (LIFO)\n");
+    printf("\n===== DFC - Data Flow Controller =====\n");
+    printf("1. Gerenciar pilha (LIFO)\n");
+    printf("2. Gerenciar fila (FIFO)\n");
     printf("3. Gerenciar registradores\n");
     printf("0. Sair\n");
     printf("> ");
@@ -24,7 +24,7 @@ int main_menu(){
 int menu_stack(){
     int x;
 
-    printf("\n===== PILHA =====\n");
+    printf("\n===== Pilha de dados =====\n");
     printf("1. Adicionar item\n");
     printf("2. Remover item\n");
     printf("3. Verificar pilha (topo)\n");
@@ -40,7 +40,7 @@ int menu_stack(){
 int menu_queue(){
     int x;
 
-    printf("\n===== FILA =====\n");
+    printf("\n===== Fila de dados =====\n");
     printf("1. Adicionar item\n");
     printf("2. Remover item\n");
     printf("3. Verificar fila (inicio e fim)\n");
@@ -99,7 +99,6 @@ void init_program()
         switch(x)
         {
         case 1:
-
             if(_CHECK_LIFO_DATAFLOW() == 1){
                 printf("Pilha bloqueada! Desbloqueie em <REGISTRADORES>\n");
                 break;
@@ -117,7 +116,7 @@ void init_program()
                 case 1:
                     uint8_t byte;
                     unsigned int temp;
-                    printf("Byte a ser adicionado: \n");
+                    printf("Digite o dado para empilhar: ");
                     scanf("%u", &temp);
                     byte = (uint8_t)temp;
 
@@ -156,7 +155,7 @@ void init_program()
             break;
 
         case 2:
-
+            clear_terminal();
             if(_CHECK_FIFO_DATAFLOW() == 1){
                 printf("Fila bloqueada! Desbloqueie em <REGISTRADORES>\n");
                 break;
@@ -184,8 +183,26 @@ void init_program()
             opt = 1;
             while(opt == 1)
             {
-                printf("REGISTRADOR: %u\n", DATA0->CTRL);
-                printf("FIFO: %u | LIFO: %u\n", _CHECK_FIFO_DATAFLOW(), _CHECK_LIFO_DATAFLOW());
+                clear_terminal();
+                printf("DATA0_CTRL:\n");
+                printf("| ");
+
+                for(int i = 7; i >= 0; i--)
+                {
+                    uint8_t bit = ((DATA0->CTRL >> i) & 1);
+                    printf("%d | ", bit);
+                }
+
+                printf("\n\nDATA0_STATUS:\n");
+                printf("| ");
+
+                for(int i = 7; i >= 0; i--)
+                {
+                    uint8_t bit = ((DATA0->STATUS >> i) & 1);
+                    printf("%d | ", bit);
+                }
+
+                printf("\n");
 
                 int a = menu_reg();
                 switch(a)
