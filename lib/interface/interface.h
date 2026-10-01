@@ -1,8 +1,8 @@
 #pragma once
 
-int menu_principal();
+int main_menu();
 int menu_queue();
 int menu_stack();
 int menu_reg();
 
-void limpa_terminal();
+void clear_terminal();

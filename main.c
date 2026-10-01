@@ -11,8 +11,8 @@ int main(){
 
     while(1)
     {
-        limpa_terminal();
-        int x = menu_principal();
+        clear_terminal();
+        int x = main_menu();
         switch(x)
         {
         case 1:
@@ -22,9 +22,9 @@ int main(){
                 break;
             }
 
-            limpa_terminal();
-            stack *pilha;
-            init_stack(&pilha);
+            clear_terminal();
+            stack *ptr_stack;
+            init_stack(&ptr_stack);
             opt = 1;
             while(opt == 1)
             {
@@ -38,27 +38,27 @@ int main(){
                     scanf("%u", &temp);
                     byte = (uint8_t)temp;
 
-                    limpa_terminal();
-                    add_stack_node(byte, &pilha);
+                    clear_terminal();
+                    add_stack_node(byte, &ptr_stack);
                     break;
 
                 case 2:
-                    limpa_terminal();
-                    remove_stack_node(&pilha);
+                    clear_terminal();
+                    remove_stack_node(&ptr_stack);
                     break;
 
                 case 3:
-                    limpa_terminal();
-                    if(stack_empty_verify(pilha) == 1){
+                    clear_terminal();
+                    if(stack_empty_verify(ptr_stack) == 1){
                         break;
                     }else{
-                        printf("Topo da pilha: 0x%x", pilha->topo->data);
+                        printf("Topo da pilha: 0x%x", ptr_stack->top->data);
                     }
                     break;
 
                 case 4:
-                    limpa_terminal();
-                    clear_stack(&pilha);
+                    clear_terminal();
+                    clear_stack(&ptr_stack);
                     break;
 
                 case 0:
