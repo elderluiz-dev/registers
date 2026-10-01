@@ -1,3 +1,10 @@
 lib/reg/reg
 lib/data_stack/stack
 main
+
+lib/reg/8bit_reg.o
+lib/data_stack/stack.o
+lib/interface/interface.o
+lib/data_queue/queue.o
+main.o
+run

@@ -6,3 +6,5 @@ int menu_stack();
 int menu_reg();
 
 void clear_terminal();
+
+void init_program();
