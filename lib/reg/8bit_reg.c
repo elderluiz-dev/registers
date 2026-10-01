@@ -2,11 +2,11 @@
 
 #include "8bit_reg.h"
 
-#define FIFO_BLOCK_BIT (DATA0->CTRL >> 7)
-#define FIFO_FULL_BIT  (DATA0->STATUS >> 7)
+#define FIFO_BLOCK_BIT ((DATA0->CTRL >> 7) & 1)
+#define FIFO_FULL_BIT  ((DATA0->STATUS >> 7) & 1)
 
-#define LIFO_BLOCK_BIT (DATA0->CTRL >> 6)
-#define LIFO_FULL_BIT  (DATA0->STATUS >> 6)
+#define LIFO_BLOCK_BIT ((DATA0->CTRL >> 6) & 1)
+#define LIFO_FULL_BIT  ((DATA0->STATUS >> 6) & 1)
 
 DataRegisters mock_data0; 
 DataRegisters *DATA0 = &mock_data0;

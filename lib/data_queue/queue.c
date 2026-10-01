@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
-#include "8bit_reg.h"
+#include "lib/reg/8bit_reg.h"
 
 uint8_t init_queue(queue **fila)
 {
@@ -146,12 +146,10 @@ int main(){
     uint8_t data2 = 0x1FU;
     uint8_t data3 = 0xF3U;
 
-
     // iniciando stack    
     printf("Iniciando fila...\n");
     init_queue(&fila);
     printf("Fila iniciada!\n");
-
 
     // adicionando item na stack
     printf("Adicionando item na fila...\n");
@@ -169,6 +167,15 @@ int main(){
     printf("Item adicionado!...\n");
     printf("Fim da fila: 0x%x\n", fila->fim->data);
 
+    printf("Adicionando item na fila...\n");
+    add_queue_node(fila, data3);
+    printf("Item adicionado!...\n");
+    printf("Fim da fila: 0x%x\n", fila->fim->data);
+
+    printf("Adicionando item na fila...\n");
+    add_queue_node(fila, data3);
+    printf("Item adicionado!...\n");
+    printf("Fim da fila: 0x%x\n", fila->fim->data);
 
     // removendo topo da stack
     printf("Removendo topo da fila...\n");
@@ -177,11 +184,9 @@ int main(){
     printf("Item removido!\n");
     printf("Fim da fila: 0x%x\n", fila->fim->data);
 
-
     // verificando se a stack está vazia
     check_queue(fila);
     printf("\n");
-
 
     // esvaziando stack
     printf("Limpando fila...\n");
