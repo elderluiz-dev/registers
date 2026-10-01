@@ -3,7 +3,7 @@
 #include "interface.h"
 #include "8bit_reg.h"
 
-int menu_principal(){
+int main_menu(){
     int x;
 
     printf("\n===== SIMULADOR DE REGISTRADOR =====\n");
@@ -80,6 +80,6 @@ int menu_reg(){
     return x;
 }
 
-void limpa_terminal(){
+void clear_terminal(){
     system("clear");
 }
