@@ -4,32 +4,32 @@
 #include "queue.h"
 #include "8bit_reg.h"
 
-uint8_t init_queue(queue **fila)
+uint8_t init_queue(queue **ptr_queue)
 {
-    *fila = (queue *)malloc(sizeof(**fila));
+    *ptr_queue = (queue *)malloc(sizeof(**ptr_queue));
 
-    if(*fila == NULL)
+    if(*ptr_queue == NULL)
     {
         printf("Erro na inicialização da fila.\n");
         return 1;
     }
 
-    (*fila)->size = 0;
-    (*fila)->inicio = NULL;
-    (*fila)->fim = NULL;
+    (*ptr_queue)->size = 0;
+    (*ptr_queue)->inicio = NULL;
+    (*ptr_queue)->fim = NULL;
 
     return 0;
 }
 
-uint8_t add_queue_node(queue *fila, uint8_t data)
+uint8_t add_queue_node(queue *ptr_queue, uint8_t data)
 {
-    if(fila == NULL)
+    if(ptr_queue == NULL)
     {
         printf("A fila ainda não foi iniciada.");
         return 1;
     }
  
-    if(_CHECK_FIFO_DATAFLOW() || check_full_queue(fila))
+    if(_CHECK_FIFO_DATAFLOW() || check_full_queue(ptr_queue))
     {
         printf("Não pode ser adicionado!\n");
         return 1;
@@ -45,27 +45,27 @@ uint8_t add_queue_node(queue *fila, uint8_t data)
     new->data = data;
     new->prox = NULL;
 
-    if(fila->inicio == NULL)
+    if(ptr_queue->inicio == NULL)
     {
-        fila->inicio = new;
-        fila->fim = new;
-        fila->size++;
-        check_full_queue(fila);
+        ptr_queue->inicio = new;
+        ptr_queue->fim = new;
+        ptr_queue->size++;
+        check_full_queue(ptr_queue);
 
         return 0;
     }
 
-    fila->fim->prox = new;
-    fila->fim = new;
-    fila->size++;
-    check_full_queue(fila);
+    ptr_queue->fim->prox = new;
+    ptr_queue->fim = new;
+    ptr_queue->size++;
+    check_full_queue(ptr_queue);
 
     return 0;
 }
 
-uint8_t remove_queue_node(queue *fila)
+uint8_t remove_queue_node(queue *ptr_queue)
 {
-    if(fila == NULL || fila->size == 0)
+    if(ptr_queue == NULL || ptr_queue->size == 0)
     {
         printf("A fila esta vazia.");
         return 1;
@@ -77,22 +77,22 @@ uint8_t remove_queue_node(queue *fila)
         return 1;
     }
 
-    if(fila->size == 1)
+    if(ptr_queue->size == 1)
     {
-        free(fila->inicio);
-        fila->inicio = NULL;
-        fila->fim = NULL;
+        free(ptr_queue->inicio);
+        ptr_queue->inicio = NULL;
+        ptr_queue->fim = NULL;
 
-        fila->size--;
+        ptr_queue->size--;
         return 0;
     }
 
-    n_queue *aux = fila->inicio;
-    fila->inicio = aux->prox;
+    n_queue *aux = ptr_queue->inicio;
+    ptr_queue->inicio = aux->prox;
     free(aux);
-    fila->size--;
+    ptr_queue->size--;
 
-    if(fila->size < 5)
+    if(ptr_queue->size < 5)
     {
         _INTERNAL_SETSTATUS_FIFO_NFULL();
     }
@@ -100,22 +100,22 @@ uint8_t remove_queue_node(queue *fila)
     return 0;
 }
 
-uint8_t check_queue(queue *fila)
+uint8_t check_queue(queue *ptr_queue)
 {
-    if(fila == NULL || fila->size == 0)
+    if(ptr_queue == NULL || ptr_queue->size == 0)
     {
         printf("A fila esta vazia.");
         return 1;
     }
  
-    printf("A fila possui %d elementos", fila->size);
+    printf("A fila possui %d elementos", ptr_queue->size);
     
     return 0;
 }
 
-uint8_t clear_queue(queue **fila)
+uint8_t clear_queue(queue **ptr_queue)
 {
-    if(*fila == NULL)
+    if(*ptr_queue == NULL)
     {
         printf("A fila ainda não foi iniciada.");
         return 1;
@@ -127,18 +127,19 @@ uint8_t clear_queue(queue **fila)
         return 1;
     }
 
-    while((*fila)->size != 0)
+    while((*ptr_queue)->size != 0)
     {
-        remove_queue_node(*fila);
+        remove_queue_node(*ptr_queue);
     }
 
-    free(*fila);
+    free(*ptr_queue);
+    *ptr_queue = NULL;
     return 0;
 }
 
-uint8_t check_full_queue(queue *fila)
+uint8_t check_full_queue(queue *ptr_queue)
 {
-    if(fila->size == 5)
+    if(ptr_queue->size == 5)
     {
         _INTERNAL_SETSTATUS_FIFO_FULL();
         return 1;
