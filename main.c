@@ -6,6 +6,5 @@
 int main(void)
 {
     init_program();
-
     return 0;
 }

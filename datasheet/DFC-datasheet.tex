@@ -1,0 +1,193 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[a4paper, top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+\usepackage{tgheros}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage{tocloft}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+\usepackage{float}
+
+\usepackage{booktabs}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue
+}
+
+\definecolor{CorFundo}{HTML}{f23847}
+
+\renewcommand{\contentsname}{\textbf{\LARGE \fontsize{34}{46}\selectfont Tabela de conteúdos}}
+
+\fancypagestyle{sumariostyle}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{1.3mm}
+	\renewcommand{\footrule}{{\color{CorFundo}\hrule width\headwidth height\footrulewidth}}
+	\fancyfoot[L]{\textcolor{CorFundo}{Revisão 1.0 --- Outubro de 2026}}
+}
+
+\begin{document}
+	\begin{titlepage}
+		\color{white}
+		\pagecolor{CorFundo}
+		
+		\begin{flushleft}
+			\noindent \small \textbf{DFC-8} Um Microcontrolador por IFBaiano -- Campus Guanambi \\
+			\rule{\linewidth}{1.3mm}
+			\vspace{1.5cm}
+			
+			{\huge \textbf{DFC-8 Datasheet} \\}
+			\vspace{0.2cm}
+			{\LARGE Um Microcontrolador \\}
+			\vspace{0.2cm}
+			{\LARGE por IFBaiano -- Campus \\}
+			\vspace{0.2cm}
+			{\LARGE Guanambi}
+			
+		 	\vfill
+		 	
+			{\color{white}\rule{\linewidth}{1.3mm}} \\[0.2cm]
+			\textcolor{white}{\small Revisão 1.0 --- Outubro de 2026}
+					 	
+		\end{flushleft}
+	\end{titlepage}
+	
+	\pagenumbering{roman}
+	
+	\clearpage
+	
+	\pagecolor{white}
+	\color{black}
+	
+	\pagestyle{sumariostyle}
+	\addtocontents{toc}{\protect\thispagestyle{sumariostyle}}
+	\tableofcontents
+	\newpage
+	\thispagestyle{sumariostyle}
+	
+	\clearpage
+
+	\pagenumbering{arabic}
+	\pagestyle{fancy}
+	
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	
+	\section{Introdução}
+	Os microcontroladores conectam o mundo do software ao mundo do hardware. Eles permitem que os desenvolvedores escrevam softwares que interagem com o mundo físico da mesma maneira determinística e precisa a nível de ciclo como a lógica digital. Eles ocupam o canto inferior esquerdo do espaço de preço/desempenho, vendendo dez vezes mais que seus irmãos mais potentes. Eles são os pilares que impulsionam a transformação digital do nosso mundo.
+	
+	\subsection{Arquitetura}
+	O DFC-8 é um microcontrolador com arquitetura baseada em 8051. Ele é focado no controle do fluxo de dados de pilhas e filas, permitindo o controle total da passagem de dados pelas estruturas de forma dinâmica. Possuindo dois registradores principais, onde um é responsável pelo controle e outro pelo status das estruturas.
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.7\linewidth]{8051-arch}
+			\caption{MCS-51 Block Diagram}
+			\label{fig:8051-arch}
+		\end{figure}
+	
+	A arquitetura do DFC-8 foi otimizada para minimizar o overhead de processamento na manipulação de dados sequenciais. Através da gestão dinâmica dos ponteiros de memória e da monitorização contínua dos limites das estruturas, o microcontrolador executa operações de inserção e remoção com eficiência de ciclo único de instrução.
+	
+	\section{Mapa de Endereços}
+	
+	O mapa de endereços a seguir detalha o mapeamento de memória para os registradores dedicados ao gerenciamento de estruturas de dados do DFC-8. O acesso a esses registradores é feito através de um barramento de endereçamento de 8 bits.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Mapa de Endereços dos Registradores de Dados}
+		\vspace{0.2cm}
+		\renewcommand{\arraystretch}{1.3}
+		\begin{tabular}{@{}lllc@{}}
+			\toprule
+			\textbf{Endereço} & \textbf{Registrador} & \textbf{Descrição} & \textbf{Acesso} \\ \midrule
+			\texttt{0x40}     & \texttt{DATA0\_CTRL}   & Registrador de controle de pilhas e filas & R/W    \\ 
+			\texttt{0x60}     & \texttt{DATA0\_STATUS} & Registrador de status (estado) das estruturas & RO     \\ \bottomrule
+		\end{tabular}
+		\label{tab:mapa_enderecos}
+	\end{table}
+	
+	\vspace{0.3cm}
+	\noindent
+	\textbf{Tipos de Acesso:}
+	\begin{itemize}
+		\item \textbf{R/W} (\textit{Read/Write}): Leitura e Escrita permitidas.
+		\item \textbf{RO} (\textit{Read-Only}): Apenas leitura. Modificações são gerenciadas exclusivamente pelo hardware.
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+\subsection{DATA0\_CTRL}
+
+O registrador \texttt{DATA0\_CTRL} controla o fluxo de dados da pilha e da fila.
+
+	\begin{table}[H]
+		\centering
+		\caption{Descrição dos bits do registrador DATA0\_CTRL}
+		\vspace{0.2cm}
+		\renewcommand{\arraystretch}{1.5}
+		\setlength{\arrayrulewidth}{1pt} % Deixa as linhas da tabela mais grossas/escuras
+		\begin{tabular}{|c|p{10cm}|c|}
+			\hline
+			\textbf{Bits} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+			7   & \textbf{FIFO\_BLOCK:} Bloqueia o fluxo de dados da fila. & RW \\ \hline
+			6   & \textbf{LIFO\_BLOCK:} Bloqueia o fluxo de dados da pilha. & RW \\ \hline
+			5:2 & Reservado. & -  \\ \hline
+			1   & \textbf{FIFO\_UNLOCK:} Libera o fluxo de dados da fila. & RW \\ \hline
+			0   & \textbf{LIFO\_UNLOCK:} Libera o fluxo de dados da pilha. & RW \\ \hline
+		\end{tabular}
+		\label{tab:data0_ctrl}
+	\end{table}
+
+\vspace{0.5cm}
+
+\subsection{DATA0\_STATUS}
+
+Esse é um registrador de leitura, e indica se a fila/pilha está cheia ou não.
+
+	\begin{table}[H]
+		\centering
+		\caption{Descrição dos bits do registrador DATA0\_STATUS}
+		\vspace{0.2cm}
+		\renewcommand{\arraystretch}{1.5}
+		\setlength{\arrayrulewidth}{1pt}
+		\begin{tabular}{|c|p{10cm}|c|}
+			\hline
+			\textbf{Bits} & \textbf{Descrição} & \textbf{Tipo} \\ \hline
+			7   & \textbf{FIFO\_FULL:} Quando a fila está cheia - 1. Quando ela ainda não encheu - 0. & RO \\ \hline
+			6   & \textbf{LIFO\_FULL:} Quando a pilha está cheia - 1. Quando ela ainda não encheu - 0. & RO \\ \hline
+			5:0 & Reservado. & -  \\ \hline
+		\end{tabular}
+		\label{tab:data0_status}
+	\end{table}
+	
+	\clearpage
+	\thispagestyle{empty}
+	\pagecolor{CorFundo}
+	\color{white}
+	
+	\mbox{}
+		
+		
+	{\color{white}\rule{\linewidth}{1.3mm}} \\[0.2cm]
+		
+	\vspace*{\fill}
+	
+	\begin{flushleft}
+		\begin{flushleft}
+			{\LARGE \textbf{IFBaiano -- Campus Guanambi}} \\
+		\end{flushleft}
+		{\color{white}\rule{\linewidth}{1.3mm}} \\[0.2cm]
+		\small Revisão 1.0 --- Outubro de 2026
+	\end{flushleft}
+\end{document}

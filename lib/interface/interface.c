@@ -10,7 +10,7 @@
 int main_menu(){
     int x;
 
-    printf("\n===== DFC - Data Flow Controller =====\n");
+    printf("\n===== DFC-8 - Data Flow Controller =====\n");
     printf("1. Gerenciar pilha (LIFO)\n");
     printf("2. Gerenciar fila (FIFO)\n");
     printf("3. Gerenciar registradores\n");
