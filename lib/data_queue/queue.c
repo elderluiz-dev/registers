@@ -6,6 +6,11 @@
 
 uint8_t init_queue(queue **ptr_queue)
 {
+    if(*ptr_queue != NULL)
+    {
+        return 1;
+    }
+    
     *ptr_queue = (queue *)malloc(sizeof(**ptr_queue));
 
     if(*ptr_queue == NULL)
