@@ -47,7 +47,6 @@ uint8_t add_stack_node(uint8_t data, stack **ptr_stack)
     node->next = (*ptr_stack)->top;
     (*ptr_stack)->top = node;
     (*ptr_stack)->size++;
-    printf("Item adicionado.\n");
 
     return 0;
 }
@@ -70,8 +69,6 @@ uint8_t remove_stack_node(stack **ptr_stack)
     (*ptr_stack)->top = novo_top;
     (*ptr_stack)->size--;
     
-    printf("top removido.\n");
-
     if((*ptr_stack)->size < 5)
     {
         _INTERNAL_SETSTATUS_LIFO_NFULL();
@@ -125,7 +122,6 @@ uint8_t check_full(stack *ptr_stack)
 {
     if(ptr_stack->size == 5)
     {
-        printf("Lista cheia.");
         _INTERNAL_SETSTATUS_LIFO_FULL();
         return 1;
     }
