@@ -97,8 +97,8 @@ void init_program()
     {
         clear_terminal();
 
-        stack *ptr_stack;
-        queue *ptr_queue;
+        stack *ptr_stack = NULL;
+        queue *ptr_queue = NULL;
 
         int x = main_menu();
         switch(x)
@@ -113,6 +113,7 @@ void init_program()
                 clear_terminal();
 
                 init_stack(&ptr_stack);
+                
                 opt = 1;
                 while(opt == 1)
                 {
