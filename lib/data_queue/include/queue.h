@@ -13,10 +13,10 @@ typedef struct {
     n_queue *fim;
 } queue;
 
-uint8_t init_queue(queue **fila);
-uint8_t add_queue_node(queue *fila, uint8_t data);
-uint8_t remove_queue_node(queue *fila);
-uint8_t check_queue(queue *fila);
-uint8_t clear_queue(queue **fila);
+uint8_t init_queue(queue **ptr_queue);
+uint8_t add_queue_node(queue *ptr_queue, uint8_t data);
+uint8_t remove_queue_node(queue *ptr_queue);
+uint8_t check_queue(queue *ptr_queue);
+uint8_t clear_queue(queue **ptr_queue);
 
-uint8_t check_full_queue(queue *fila);
+uint8_t check_full_queue(queue *ptr_queue);
