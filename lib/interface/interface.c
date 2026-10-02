@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "stack.h"
 #include "queue.h"
@@ -337,4 +338,57 @@ void init_program()
             }
         }
     }
+}
+
+void auto_test(){
+    _INIT_REGISTERS();
+    uint8_t data = 0x00U;
+    int clock = 0;
+
+    stack *ptr_stack = NULL;
+    init_stack(&ptr_stack);
+
+    queue *ptr_queue = NULL;
+    init_queue(&ptr_queue);
+
+    while(data < 0xFFU)
+    {
+
+        add_stack_node(data, &ptr_stack);
+        if(check_full_queue(ptr_queue) == 0){
+            add_queue_node(ptr_queue, ptr_stack->top->data);
+            remove_stack_node(&ptr_stack);
+        }
+
+        if(clock == 2){
+            remove_queue_node(ptr_queue);
+            clock = 0;
+        }
+
+        printf("\nClock: %d", clock);
+
+        if(ptr_stack->top != NULL)
+        {
+            printf(" | Pilha: %x", ptr_stack->top->data);
+        }
+        else
+        {
+            printf(" | Pilha: vazia");
+        }
+
+        if(ptr_queue->inicio != NULL)
+        {
+            printf(" | Fila: %x", ptr_queue->inicio->data);
+        }
+        else
+        {
+            printf(" | Fila: vazia");
+        }
+        
+        clear_terminal();
+        clock++;
+        data++;
+        usleep(500000);
+    }
+
 }
