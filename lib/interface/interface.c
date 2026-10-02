@@ -120,6 +120,10 @@ void init_program()
                     {
                         case 1:
                         {
+                            if(ptr_stack == NULL){
+                                init_stack(&ptr_stack);
+                            }
+
                             uint8_t byte;
                             unsigned int temp;
                             printf("Digite o dado para empilhar: ");
@@ -191,6 +195,11 @@ void init_program()
                     {
                         case 1:
                         {
+                            if(ptr_queue == NULL)
+                            {
+                                init_queue(&ptr_queue);
+                            }
+
                             uint8_t byte;
                             unsigned int temp;
 
@@ -213,10 +222,11 @@ void init_program()
 
                         case 3:
                         {
-                            clear_terminal;
+                            clear_terminal();
                             if(check_queue(ptr_queue)) break;
 
                             printf("Inicio da fila: 0x%x", ptr_queue->inicio->data);
+                            break;
                         }
 
                         case 4:
