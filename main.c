@@ -5,7 +5,7 @@
 
 int main(void)
 {
-    auto_test();
+    init_program();
 
     return 0;
 }
