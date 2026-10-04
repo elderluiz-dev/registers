@@ -122,7 +122,7 @@ uint8_t clear_queue(queue **ptr_queue)
 {
     if(*ptr_queue == NULL)
     {
-        printf("A fila ainda não foi iniciada.");
+        printf("A fila ainda não foi iniciada.\n");
         return 1;
     }
  
