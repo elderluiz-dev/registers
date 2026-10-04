@@ -38,11 +38,6 @@ void _LIFO_BLOCK_DATAFLOW(void)
 
 uint8_t _FIFO_UNLOCK_DATAFLOW(void)
 {
-    if((FIFO_FULL_BIT == 1))
-    {
-        return 1;
-    }
-
     // Cleaning and setting FIFO bit
     DATA0->CTRL &= ~(CTRL_FIFO_DFB_MASK);
     DATA0->CTRL |= CTRL_FIFO_DFNB_MASK;
@@ -52,11 +47,6 @@ uint8_t _FIFO_UNLOCK_DATAFLOW(void)
 
 uint8_t _LIFO_UNLOCK_DATAFLOW(void)
 {
-    if((LIFO_FULL_BIT == 1))
-    {
-        return 1;
-    }
-
     // Cleaning and setting LIFO bit
     DATA0->CTRL &= ~(CTRL_LIFO_DFB_MASK);
     DATA0->CTRL |= CTRL_LIFO_DFNB_MASK;
