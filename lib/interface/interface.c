@@ -1,98 +1,119 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "stack.h"
 #include "queue.h"
 #include "8bit_reg.h"
 #include "interface.h"
 
-int main_menu(){
+#define RESET "\033[0m"
+#define PURPLE_BOLD "\033[1;35m"
+
+#define WHITE_STR "\033[1;97m"
+
+#define GREEN "\033[1;32m"
+
+#define RED   "\033[1;31m"
+#define RED_STR "\033[1;91m"
+
+#define BLUE "\033[1;34m"
+#define BLUE_STR "\033[1;94m"
+
+#define YELLOW "\033[1;33m"
+#define YELLOW_STR "\033[1;93m"
+
+int main_menu()
+{
     int x;
 
-    printf("\n===== DFC-8 - Data Flow Controller =====\n");
-    printf("1. Gerenciar pilha (LIFO)\n");
-    printf("2. Gerenciar fila (FIFO)\n");
-    printf("3. Gerenciar registradores\n");
-    printf("0. Sair\n");
-    printf("> ");
+    printf("\n" BLUE_STR "=====" RESET " " PURPLE_BOLD "DFC-8" RESET " - " WHITE_STR "Data Flow Controller" RESET " " BLUE_STR "=====" RESET "\n");
+    printf(WHITE_STR "1." RESET " Gerenciar Pilha (" WHITE_STR "LIFO" RESET ")\n");
+    printf(WHITE_STR "2." RESET " Gerenciar Fila  (" WHITE_STR "FIFO" RESET ")\n");
+    printf(WHITE_STR "3." RESET " Gerenciar Registradores\n\n");
+    printf(RED_STR "0." RED " Sair" RESET "\n");
+    printf(BLUE_STR "> " RESET);
 
     scanf("%d%*c", &x);
 
     return x;    
 }
 
-int menu_stack(){
+int menu_stack()
+{
     int x;
 
-    printf("\n===== Pilha de dados =====\n");
-    printf("1. Adicionar item\n");
-    printf("2. Remover item\n");
-    printf("3. Verificar pilha (topo)\n");
-    printf("4. Limpar pilha\n");
-    printf("0. Voltar\n");
-    printf("> ");
+    printf("\n" BLUE_STR "=====" RESET " " WHITE_STR "Pilha de dados" RESET " " BLUE_STR "=====" RESET "\n");
+    printf(WHITE_STR "1." RESET " Adicionar item\n");
+    printf(WHITE_STR "2." RESET " Remover item\n");
+    printf(WHITE_STR "3." RESET " Verificar topo da pilha\n");
+    printf(WHITE_STR "4." RESET " Limpar pilha\n\n");
+    printf(YELLOW_STR "0." YELLOW " Voltar" RESET "\n");
+    printf(BLUE_STR "> " RESET);
     
     scanf("%d%*c", &x);
 
     return x;
 }
 
-int menu_queue(){
+int menu_queue()
+{
     int x;
 
-    printf("\n===== Fila de dados =====\n");
-    printf("1. Adicionar item\n");
-    printf("2. Remover item\n");
-    printf("3. Verificar fila (inicio e fim)\n");
-    printf("4. Limpar fila\n");
-    printf("0. Voltar\n");
-    printf("> ");
+    printf("\n" BLUE_STR "=====" RESET " " WHITE_STR "Fila de dados" RESET " " BLUE_STR "=====" RESET "\n");
+    printf(WHITE_STR "1." RESET " Adicionar item\n");
+    printf(WHITE_STR "2." RESET " Remover item\n");
+    printf(WHITE_STR "3." RESET " Verificar inicio e fim da fila\n");
+    printf(WHITE_STR "4." RESET " Limpar fila\n");
+    printf(YELLOW_STR "0." YELLOW " Voltar" RESET "\n\n");
+    printf(BLUE_STR "> " RESET);
     
     scanf("%d%*c", &x);
 
     return x;
 }
 
-int menu_reg(){
+int menu_reg()
+{
     int x;
 
-    printf("\n===== REGISTRADORES =====\n");
-    if(_CHECK_FIFO_DATAFLOW() == 1)
-    {
-        printf("1. Desbloquear fila\n");    
-    }
-    else
-    {
-        printf("1. Bloquear fila\n");
-    }
-    
+    printf("\n" BLUE_STR "=====" RESET " " WHITE_STR "Registradores" RESET " " BLUE_STR "=====" RESET "\n");
     if(_CHECK_LIFO_DATAFLOW() == 1)
     {
-        printf("2. Desbloquear pilha\n");    
+        printf(WHITE_STR "1." RESET " " GREEN "Desbloquear pilha" RESET "\n");    
     }
     else
     {
-        printf("2. Bloquear pilha\n");
+        printf(WHITE_STR "1." RESET " " RED "Bloquear pilha" RESET "\n");
+    }
+
+    if(_CHECK_FIFO_DATAFLOW() == 1)
+    {
+        printf(WHITE_STR "2." RESET " " GREEN "Desbloquear fila" RESET "\n\n");    
+    }
+    else
+    {
+        printf(WHITE_STR "2." RESET " " RED "Bloquear fila" RESET "\n\n");
     }
     
-    printf("0. Voltar\n");
-    printf("> ");
+    printf(YELLOW_STR "0." YELLOW " Voltar" RESET "\n");
+    printf(BLUE_STR "> " RESET);
     
     scanf("%d%*c", &x);
 
     return x;
 }
 
-void clear_terminal(){
+void clear_terminal()
+{
     system("clear");
 }
 
 void init_program()
 {
-    clear_terminal();
-    int opt;
     _INIT_REGISTERS();
+    clear_terminal();
+
+    int opt;
 
     stack *ptr_stack = NULL;
     queue *ptr_queue = NULL;
@@ -105,8 +126,9 @@ void init_program()
             case 1:
             {
                 clear_terminal();
-                if(_CHECK_LIFO_DATAFLOW() == 1){
-                    printf("Pilha bloqueada! Desbloqueie em <REGISTRADORES>\n");
+                if(_CHECK_LIFO_DATAFLOW() == 1)
+                {
+                    printf(RED "Pilha bloqueada!" RESET " Desbloqueie em " YELLOW_STR "<Registradores>" RESET "\n");
                     break;
                 }
                 
@@ -120,7 +142,8 @@ void init_program()
                     {
                         case 1:
                         {
-                            if(ptr_stack == NULL){
+                            if(ptr_stack == NULL)
+                            {
                                 init_stack(&ptr_stack);
                             }
 
@@ -147,8 +170,10 @@ void init_program()
                             clear_terminal();
                             if(stack_empty_verify(ptr_stack) == 1){
                                 break;
-                            }else{
-                                printf("Topo da pilha: 0x%x", ptr_stack->top->data);
+                            }
+                            else
+                            {
+                                printf("Topo da pilha: " GREEN "0x%X" RESET, ptr_stack->top->data);
                             }
                             break;
                         }
@@ -169,7 +194,7 @@ void init_program()
 
                         default:
                         {
-                            printf("Opção inválida.\n");
+                            printf(RED "A opção selecionada é inválida." RESET "\n");
                             break;
                         }
                     }
@@ -181,8 +206,9 @@ void init_program()
             case 2:
             {
                 clear_terminal();
-                if(_CHECK_FIFO_DATAFLOW() == 1){
-                    printf("Fila bloqueada! Desbloqueie em <REGISTRADORES>\n");
+                if(_CHECK_FIFO_DATAFLOW() == 1)
+                {
+                    printf(RED "Fila bloqueada!" RESET " Desbloqueie em " YELLOW_STR "<Registradores>" RESET "\n");
                     break;
                 }
 
@@ -226,7 +252,7 @@ void init_program()
                             clear_terminal();
                             if(check_queue(ptr_queue)) break;
 
-                            printf("Inicio da fila: 0x%x", ptr_queue->inicio->data);
+                            printf("Inicio da fila: " GREEN "0x%x" RESET, ptr_queue->inicio->data);
                             break;
                         }
 
@@ -246,7 +272,7 @@ void init_program()
 
                         default:
                         {
-                            printf("Opção inválida.\n");
+                            printf(RED "A opção selecionada é inválida." RESET "\n");
                             break;
                         }
                     }
@@ -258,50 +284,78 @@ void init_program()
             case 3:
             {
 
+                int reg_invalid = 0;
+
                 opt = 1;
                 while(opt == 1)
                 {
                     clear_terminal();
-                    printf("DATA0_CTRL:\n");
+                    printf(WHITE_STR "DATA0_CTRL:" RESET "\n");
                     printf("| ");
 
                     for(int i = 7; i >= 0; i--)
                     {
                         uint8_t bit = ((DATA0->CTRL >> i) & 1);
-                        printf("%d | ", bit);
+                        if(bit == 1)
+                        {
+                            printf(GREEN "%d" RESET " | ", bit);
+                        }
+                        else
+                        {
+                            printf(RED "%d" RESET " | ", bit);
+                        }
                     }
 
-                    printf("\n\nDATA0_STATUS:\n");
+                    printf("\n\n" WHITE_STR "DATA0_STATUS:" RESET "\n");
                     printf("| ");
 
                     for(int i = 7; i >= 0; i--)
                     {
                         uint8_t bit = ((DATA0->STATUS >> i) & 1);
-                        printf("%d | ", bit);
+                        if(bit == 1)
+                        {
+                            printf(GREEN "%d" RESET " | ", bit);
+                        }
+                        else
+                        {
+                            printf(RED "%d" RESET " | ", bit);
+                        }
                     }
 
                     printf("\n");
+
+                    if(reg_invalid == 1)
+                    {
+                        printf(RED "A opção selecionada é inválida." RESET "\n");
+                        reg_invalid = 0;
+                    }
 
                     int a = menu_reg();
                     switch(a)
                     {
                         case 1:
                         {
-                            if(_CHECK_FIFO_DATAFLOW() == 1){
-                                _FIFO_UNLOCK_DATAFLOW();    
-                            }else{
-                                _FIFO_BLOCK_DATAFLOW();
+                            if(_CHECK_LIFO_DATAFLOW() == 1)
+                            {
+                                _LIFO_UNLOCK_DATAFLOW();    
+                            }
+                            else
+                            {
+                                _LIFO_BLOCK_DATAFLOW();
                             }
 
-                            break;
+                            break;   
                         }
 
                         case 2:
                         {
-                            if(_CHECK_LIFO_DATAFLOW() == 1){
-                                _LIFO_UNLOCK_DATAFLOW();    
-                            }else{
-                                _LIFO_BLOCK_DATAFLOW();
+                            if(_CHECK_FIFO_DATAFLOW() == 1)
+                            {
+                                _FIFO_UNLOCK_DATAFLOW();    
+                            }
+                            else
+                            {
+                                _FIFO_BLOCK_DATAFLOW();
                             }
 
                             break;
@@ -316,7 +370,7 @@ void init_program()
 
                         default:
                         {
-                            printf("Opção inválida.\n");
+                            reg_invalid = 1;
                             break;
                         }
                     }
@@ -327,7 +381,7 @@ void init_program()
 
             case 0:
             {
-                printf("Programa encerrado pelo usuário\n");
+                printf(GREEN "Programa encerrado pelo usuário" RESET "\n");
                 clear_stack(&ptr_stack);
                 clear_queue(&ptr_queue);
                 return;
@@ -335,8 +389,8 @@ void init_program()
 
             default:
             {
-                printf("Opção inválida.\n");
                 clear_terminal();
+                printf(RED "A opção selecionada é inválida." RESET "\n");
                 break;
             }
         }
