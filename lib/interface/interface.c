@@ -381,9 +381,11 @@ void init_program()
 
             case 0:
             {
-                printf(GREEN "Programa encerrado pelo usuário" RESET "\n");
                 clear_stack(&ptr_stack);
                 clear_queue(&ptr_queue);
+                clear_terminal();
+                
+                printf(GREEN "\nPrograma encerrado pelo usuário" RESET "\n");
                 return;
             }
 
