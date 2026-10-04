@@ -30,7 +30,7 @@ uint8_t add_queue_node(queue *ptr_queue, uint8_t data)
 {
     if(ptr_queue == NULL)
     {
-        printf(RED "A Fila não foi iniciada!\n" RESET);
+        printf(RED "A Fila não foi iniciada ou está vazia!\n" RESET);
         return 1;
     }
  
@@ -86,6 +86,7 @@ uint8_t remove_queue_node(queue *ptr_queue)
 
         ptr_queue->size--;
         
+        printf(GREEN "Dado removido com sucesso! Fila está vazia.\n" RESET);
         return 0;
     }
 
@@ -99,6 +100,7 @@ uint8_t remove_queue_node(queue *ptr_queue)
         _INTERNAL_SETSTATUS_FIFO_NFULL();
     }
 
+    printf(GREEN "Dado removido com sucesso!\n" RESET);
     return 0;
 }
 
@@ -110,26 +112,46 @@ uint8_t check_queue(queue *ptr_queue)
         return 1;
     }
  
-    printf("A fila possui %d elementos\n", ptr_queue->size);
+    printf("A fila possui" GREEN " %d " RESET "elemento(s)\n", ptr_queue->size);
     
     return 0;
 }
 
 uint8_t clear_queue(queue **ptr_queue)
 {
-    if(*ptr_queue == NULL)
+    if(*ptr_queue == NULL || (*ptr_queue)->size == 0)
     {
-        printf(RED "A Fila não foi iniciada!\n" RESET);
+        printf(RED "A fila não foi iniciada ou está vazia!\n" RESET);
         return 1;
     }
 
     while((*ptr_queue)->size != 0)
     {
-        remove_queue_node(*ptr_queue);
+        if((*ptr_queue)->size == 1)
+        {
+            free((*ptr_queue)->inicio);
+            (*ptr_queue)->inicio = NULL;
+            (*ptr_queue)->fim = NULL;
+
+            (*ptr_queue)->size--;
+            
+            break;
+        }
+
+        n_queue *aux = (*ptr_queue)->inicio;
+        (*ptr_queue)->inicio = aux->prox;
+        free(aux);
+        (*ptr_queue)->size--;
+
+        if((*ptr_queue)->size < 5)
+        {
+            _INTERNAL_SETSTATUS_FIFO_NFULL();
+        }
     }
 
     free(*ptr_queue);
     *ptr_queue = NULL;
+    printf(GREEN "A fila foi esvaziada!\n" RESET);    
     return 0;
 }
 
