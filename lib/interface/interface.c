@@ -5,22 +5,7 @@
 #include "queue.h"
 #include "8bit_reg.h"
 #include "interface.h"
-
-#define RESET "\033[0m"
-#define PURPLE_BOLD "\033[1;35m"
-
-#define WHITE_STR "\033[1;97m"
-
-#define GREEN "\033[1;32m"
-
-#define RED   "\033[1;31m"
-#define RED_STR "\033[1;91m"
-
-#define BLUE "\033[1;34m"
-#define BLUE_STR "\033[1;94m"
-
-#define YELLOW "\033[1;33m"
-#define YELLOW_STR "\033[1;93m"
+#include "config.h"
 
 int main_menu()
 {
@@ -173,7 +158,7 @@ void init_program()
                             }
                             else
                             {
-                                printf("Topo da pilha: " GREEN "0x%X" RESET, ptr_stack->top->data);
+                                printf("Topo da pilha: " GREEN "0x%X\n" RESET, ptr_stack->top->data);
                             }
                             break;
                         }
@@ -194,6 +179,7 @@ void init_program()
 
                         default:
                         {
+                            clear_terminal();
                             printf(RED "A opção selecionada é inválida." RESET "\n");
                             break;
                         }
@@ -272,6 +258,7 @@ void init_program()
 
                         default:
                         {
+                            clear_terminal();
                             printf(RED "A opção selecionada é inválida." RESET "\n");
                             break;
                         }
@@ -326,7 +313,7 @@ void init_program()
 
                     if(reg_invalid == 1)
                     {
-                        printf(RED "A opção selecionada é inválida." RESET "\n");
+                        printf(RED "\nA opção selecionada é inválida." RESET "\n");
                         reg_invalid = 0;
                     }
 
@@ -370,6 +357,7 @@ void init_program()
 
                         default:
                         {
+                            clear_terminal();
                             reg_invalid = 1;
                             break;
                         }
@@ -392,7 +380,7 @@ void init_program()
             default:
             {
                 clear_terminal();
-                printf(RED "A opção selecionada é inválida." RESET "\n");
+                printf(RED "\nA opção selecionada é inválida." RESET "\n");
                 break;
             }
         }
