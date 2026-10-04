@@ -48,8 +48,8 @@ int menu_queue()
     printf(WHITE_STR "1." RESET " Adicionar item\n");
     printf(WHITE_STR "2." RESET " Remover item\n");
     printf(WHITE_STR "3." RESET " Verificar inicio e fim da fila\n");
-    printf(WHITE_STR "4." RESET " Limpar fila\n");
-    printf(YELLOW_STR "0." YELLOW " Voltar" RESET "\n\n");
+    printf(WHITE_STR "4." RESET " Limpar fila\n\n");
+    printf(YELLOW_STR "0." YELLOW " Voltar" RESET "\n");
     printf(BLUE_STR "> " RESET);
     
     scanf("%d%*c", &x);
@@ -158,6 +158,7 @@ void init_program()
                             }
                             else
                             {
+                                printf("A fila possui" GREEN " %d " RESET "elemento(s)\n", ptr_stack->size);
                                 printf("Topo da pilha: " GREEN "0x%X\n" RESET, ptr_stack->top->data);
                             }
                             break;
@@ -216,7 +217,7 @@ void init_program()
                             uint8_t byte;
                             unsigned int temp;
 
-                            printf("Digite o dado: ");
+                            printf("Digite o dado para adicionar à fila: ");
                             scanf("%u", &temp);
                             byte = (uint8_t)temp;
 
@@ -230,7 +231,6 @@ void init_program()
                         {
                             clear_terminal();
                             remove_queue_node(ptr_queue);
-                            printf(RED "Dado removido!\n" RESET);   
                             break;
                         }
 
@@ -239,7 +239,9 @@ void init_program()
                             clear_terminal();
                             if(check_queue(ptr_queue)) break;
 
-                            printf("Inicio da fila: " GREEN "0x%x" RESET, ptr_queue->inicio->data);
+                            printf("Inicio da fila: " GREEN "0x%X" RESET "\n", ptr_queue->inicio->data);
+                            printf("Fim da fila: " GREEN "0x%X" RESET "\n", ptr_queue->fim->data);
+
                             break;
                         }
 
@@ -247,7 +249,6 @@ void init_program()
                         {
                             clear_terminal();
                             clear_queue(&ptr_queue);
-                            printf(GREEN "A Pilha foi esvaziada.\n" RESET);
                             break;
                         }
 

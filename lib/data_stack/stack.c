@@ -78,7 +78,7 @@ uint8_t remove_stack_node(stack **ptr_stack)
         _INTERNAL_SETSTATUS_LIFO_NFULL();
     }
 
-    printf(RED "Dado removido!\n" RESET);
+    printf(GREEN "Dado removido com sucesso!\n" RESET);
     return 0;
 }
 
@@ -95,19 +95,28 @@ uint8_t stack_empty_verify(stack *ptr_stack)
 
 uint8_t clear_stack(stack **ptr_stack)
 {
-    if(*ptr_stack == NULL){
-        printf(RED "A Pilha não foi iniciada!\n" RESET);
+    if(*ptr_stack == NULL || (*ptr_stack)->top == NULL){
+        printf(RED "A Pilha não foi iniciada ou está vazia!\n" RESET);
         return 1;
     }
 
     if(_CHECK_LIFO_DATAFLOW() == 1)
     {
+        printf(RED "A Pilha está vazia.\n" RESET);
         return 1;
     }
     
     while((*ptr_stack)->size != 0)
     {
-        remove_stack_node(ptr_stack);
+        if(stack_empty_verify(*ptr_stack) == 1)
+        {
+            return 1;
+        }
+
+        n_stack *novo_top = (*ptr_stack)->top->next;
+        free((*ptr_stack)->top);
+        (*ptr_stack)->top = novo_top;
+        (*ptr_stack)->size--;
     }
 
     free(*ptr_stack);
