@@ -3,6 +3,7 @@
 
 #include "queue.h"
 #include "8bit_reg.h"
+#include "config.h"
 
 uint8_t init_queue(queue **ptr_queue)
 {
@@ -12,10 +13,9 @@ uint8_t init_queue(queue **ptr_queue)
     }
     
     *ptr_queue = (queue *)malloc(sizeof(**ptr_queue));
-
     if(*ptr_queue == NULL)
     {
-        printf("Erro na inicialização da fila.\n");
+        printf("\n" RED "Erro de alocação de memória: init_queue.\n" RESET);
         return 1;
     }
 
@@ -30,20 +30,20 @@ uint8_t add_queue_node(queue *ptr_queue, uint8_t data)
 {
     if(ptr_queue == NULL)
     {
-        printf("A fila ainda não foi iniciada.");
+        printf(RED "A Fila não foi iniciada!\n" RESET);
         return 1;
     }
  
-    if(_CHECK_FIFO_DATAFLOW() || check_full_queue(ptr_queue))
+    if(check_full_queue(ptr_queue))
     {
-        printf("Não pode ser adicionado!\n");
+        printf(RED "A Fila está cheia!\n" RESET);
         return 1;
     }
 
     n_queue *new = (n_queue *)malloc(sizeof(*new));
     if(new == NULL)
     {
-        printf("Erro na alocação de memoria!\n");
+        printf("\n" RED "Erro de alocação de memória: add_queue_node.\n" RESET);
         return 1;
     }
 
@@ -57,6 +57,7 @@ uint8_t add_queue_node(queue *ptr_queue, uint8_t data)
         ptr_queue->size++;
         check_full_queue(ptr_queue);
 
+        printf(GREEN "Dado adicionado com sucesso!\n" RESET);
         return 0;
     }
 
@@ -65,6 +66,7 @@ uint8_t add_queue_node(queue *ptr_queue, uint8_t data)
     ptr_queue->size++;
     check_full_queue(ptr_queue);
 
+    printf(GREEN "Dado adicionado com sucesso!\n" RESET);
     return 0;
 }
 
@@ -72,13 +74,7 @@ uint8_t remove_queue_node(queue *ptr_queue)
 {
     if(ptr_queue == NULL || ptr_queue->size == 0)
     {
-        printf("A fila esta vazia.");
-        return 1;
-    }
- 
-    if(_CHECK_FIFO_DATAFLOW())
-    {
-        printf("A fila está bloqueada!\n");
+        printf(RED "A Fila está vazia.\n" RESET);
         return 1;
     }
 
@@ -89,6 +85,7 @@ uint8_t remove_queue_node(queue *ptr_queue)
         ptr_queue->fim = NULL;
 
         ptr_queue->size--;
+        
         return 0;
     }
 
@@ -109,7 +106,7 @@ uint8_t check_queue(queue *ptr_queue)
 {
     if(ptr_queue == NULL || ptr_queue->size == 0)
     {
-        printf("A fila esta vazia.");
+        printf(RED "A Fila está vazia.\n" RESET);
         return 1;
     }
  
@@ -122,13 +119,7 @@ uint8_t clear_queue(queue **ptr_queue)
 {
     if(*ptr_queue == NULL)
     {
-        printf("A fila ainda não foi iniciada.\n");
-        return 1;
-    }
- 
-    if(_CHECK_FIFO_DATAFLOW())
-    {
-        printf("A fila está bloqueada!\n");
+        printf(RED "A Fila não foi iniciada!\n" RESET);
         return 1;
     }
 

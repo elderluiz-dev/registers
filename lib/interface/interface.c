@@ -218,11 +218,11 @@ void init_program()
 
                             printf("Digite o dado: ");
                             scanf("%u", &temp);
-
                             byte = (uint8_t)temp;
-                            add_queue_node(ptr_queue, byte);
 
                             clear_terminal();
+                            add_queue_node(ptr_queue, byte);
+
                             break;
                         }
 
@@ -230,6 +230,7 @@ void init_program()
                         {
                             clear_terminal();
                             remove_queue_node(ptr_queue);
+                            printf(RED "Dado removido!\n" RESET);   
                             break;
                         }
 
@@ -246,6 +247,7 @@ void init_program()
                         {
                             clear_terminal();
                             clear_queue(&ptr_queue);
+                            printf(GREEN "A Pilha foi esvaziada.\n" RESET);
                             break;
                         }
 
