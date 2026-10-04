@@ -90,30 +90,28 @@ void clear_terminal(){
 
 void init_program()
 {
+    clear_terminal();
     int opt;
     _INIT_REGISTERS();
 
+    stack *ptr_stack = NULL;
+    queue *ptr_queue = NULL;
+
     while(1)
     {
-        clear_terminal();
-
-        stack *ptr_stack = NULL;
-        queue *ptr_queue = NULL;
-
         int x = main_menu();
         switch(x)
         {
             case 1:
             {
+                clear_terminal();
                 if(_CHECK_LIFO_DATAFLOW() == 1){
                     printf("Pilha bloqueada! Desbloqueie em <REGISTRADORES>\n");
                     break;
                 }
-
-                clear_terminal();
-
-                init_stack(&ptr_stack);
                 
+                init_stack(&ptr_stack);
+
                 opt = 1;
                 while(opt == 1)
                 {
@@ -165,6 +163,7 @@ void init_program()
                         case 0:
                         {
                             opt = 0;
+                            clear_terminal();
                             break;
                         }
 
@@ -241,6 +240,7 @@ void init_program()
                         case 0:
                         {
                             opt = 0;
+                            clear_terminal();
                             break;
                         }
 
@@ -310,6 +310,7 @@ void init_program()
                         case 0:
                         {
                             opt = 0;
+                            clear_terminal();
                             break;
                         }
 
@@ -335,6 +336,7 @@ void init_program()
             default:
             {
                 printf("Opção inválida.\n");
+                clear_terminal();
                 break;
             }
         }

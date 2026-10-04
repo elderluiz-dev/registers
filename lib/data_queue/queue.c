@@ -113,7 +113,7 @@ uint8_t check_queue(queue *ptr_queue)
         return 1;
     }
  
-    printf("A fila possui %d elementos", ptr_queue->size);
+    printf("A fila possui %d elementos\n", ptr_queue->size);
     
     return 0;
 }
